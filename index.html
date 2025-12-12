@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SYSTEM BREACH DETECTED // SECURITY ALERT</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Courier New', monospace;
+        }
+
+        body {
+            background-color: #000;
+            color: #0f0;
+            overflow: hidden;
+            height: 100vh;
+            cursor: none;
+        }
+
+        .cursor {
+            position: absolute;
+            width: 12px;
+            height: 20px;
+            background-color: #0f0;
+            box-shadow: 0 0 10px #0f0;
+            z-index: 1000;
+            pointer-events: none;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        /* Loading Screen - Enhanced */
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1001;
+        }
+
+        .hack-logo {
+            font-size: 48px;
+            color: #f00;
+            text-shadow: 0 0 15px #f00;
+            margin-bottom: 30px;
+            letter-spacing: 5px;
+            text-align: center;
+            animation: glitch 2s infinite;
+        }
+
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+            100% { transform: translate(0); }
+        }
+
+        .loading-text {
+            font-size: 24px;
+            margin-bottom: 30px;
+            text-shadow: 0 0 10px #0f0;
+            letter-spacing: 3px;
+            text-align: center;
+        }
+
+        .progress-container {
+            width: 80%;
+            max-width: 600px;
+            margin-bottom: 30px;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: #0a0;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 25px;
+            border: 2px solid #0f0;
+            border-radius: 3px;
+            overflow: hidden;
+            box-shadow: 0 0 10px #0f0;
+            background-color: rgba(0, 30, 0, 0.3);
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #0a0, #0f0, #0a0);
+            transition: width 0.5s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            animation: shine 1.5s infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .loading-details {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #0a0;
+            height: 250px;
+            width: 80%;
+            max-width: 800px;
+            overflow: hidden;
+            border: 1px solid #0f0;
+            padding: 15px;
+            background-color: rgba(0, 20, 0, 0.2);
+            box-shadow: 0 0 10px #0f0 inset;
+        }
+
+        /* Hacked Screen */
+        #hacked-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            z-index: 1002;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .warning-icon {
+            font-size: 80px;
+            color: #f00;
+            margin-bottom: 20px;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.8; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .hacked-title {
+            font-size: 42px;
+            color: #f00;
+            text-shadow: 0 0 20px #f00;
+            margin-bottom: 20px;
+            text-align: center;
+            line-height: 1.2;
+        }
+
+        @media (max-width: 768px) {
+            .hacked-title {
+                font-size: 32px;
+            }
+            .warning-icon {
+                font-size: 60px;
+            }
+        }
+
+        .hacked-subtitle {
+            font-size: 24px;
+            color: #0f0;
+            margin-bottom: 30px;
+            max-width: 800px;
+            line-height: 1.5;
+        }
+
+        .hacked-info {
+            background-color: rgba(255, 0, 0, 0.1);
+            border: 2px solid #f00;
+            padding: 20px;
+            margin: 20px 0;
+            max-width: 800px;
+            width: 90%;
+        }
+
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-size: 18px;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed #f00;
+        }
+
+        .info-label {
+            color: #0f0;
+        }
+
+        .info-value {
+            color: #f00;
+            font-weight: bold;
+        }
+
+        .hacked-message {
+            font-size: 18px;
+            color: #0f0;
+            margin-top: 30px;
+            max-width: 800px;
+            line-height: 1.5;
+        }
+
+        .hacked-footer {
+            font-size: 14px;
+            color: #888;
+            margin-top: 20px;
+            max-width: 800px;
+            line-height: 1.5;
+        }
+
+        .restart-button {
+            background-color: #000;
+            color: #f00;
+            border: 2px solid #f00;
+            padding: 15px 30px;
+            font-size: 18px;
+            cursor: pointer;
+            margin-top: 30px;
+            transition: all 0.3s;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        .restart-button:hover {
+            background-color: #f00;
+            color: #000;
+            box-shadow: 0 0 20px #f00;
+        }
+
+        /* Matrix Background */
+        .matrix-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.1;
+        }
+
+        /* Countdown Animation */
+        .countdown {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 120px;
+            color: #f00;
+            text-shadow: 0 0 30px #f00;
+            z-index: 1003;
+            display: none;
+            animation: countdownPulse 1s infinite;
+        }
+
+        @keyframes countdownPulse {
+            0% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.1); }
+            100% { transform: translate(-50%, -50%) scale(1); }
+        }
+
+        /* Access Log */
+        .access-log-panel {
+            background-color: rgba(0, 20, 0, 0.7);
+            border: 1px solid #0f0;
+            padding: 15px;
+            margin-top: 20px;
+            max-width: 800px;
+            width: 90%;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .log-title {
+            color: #0f0;
+            margin-bottom: 10px;
+            font-size: 16px;
+            border-bottom: 1px solid #0f0;
+            padding-bottom: 5px;
+        }
+
+        .log-entry {
+            font-size: 12px;
+            color: #0a0;
+            margin-bottom: 5px;
+            padding-left: 10px;
+            border-left: 2px solid #f00;
+        }
+    </style>
+</head>
+<body>
+    <!-- Custom Cursor -->
+    <div class="cursor" id="cursor"></div>
+
+    <!-- Matrix Background -->
+    <canvas class="matrix-background" id="matrixCanvas"></canvas>
+
+    <!-- Countdown Animation -->
+    <div class="countdown" id="countdown">3</div>
+
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <div class="hack-logo">[// SYSTEM BREACH //]</div>
+        <div class="loading-text" id="loadingText">INITIALIZING SYSTEM BREACH SEQUENCE...</div>
+        
+        <div class="progress-container">
+            <div class="progress-label">
+                <span>SYSTEM ACCESS</span>
+                <span id="progressPercent">0%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </div>
+        
+        <div class="loading-details" id="loadingDetails"></div>
+    </div>
+
+    <!-- Hacked Screen -->
+    <div id="hacked-screen">
+        <div class="warning-icon">⚠️</div>
+        <div class="hacked-title">YOUR DEVICE HAS BEEN HACKED!</div>
+        <div class="hacked-subtitle">CRITICAL SECURITY BREACH DETECTED</div>
+        
+        <div class="hacked-info">
+            <div class="info-item">
+                <span class="info-label">Initial Breach Time:</span>
+                <span class="info-value" id="initialBreachTime"></span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Current Time:</span>
+                <span class="info-value" id="currentTimeDisplay"></span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Time Since Breach:</span>
+                <span class="info-value" id="timeSinceBreach"></span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Device ID:</span>
+                <span class="info-value" id="deviceIdDisplay"></span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Status:</span>
+                <span class="info-value">FULLY COMPROMISED</span>
+            </div>
+        </div>
+
+        <div class="access-log-panel">
+            <div class="log-title">ACCESS LOG</div>
+            <div class="log-entry" id="logEntry1">[INITIAL] System breach initiated...</div>
+            <div class="log-entry" id="logEntry2">[SUCCESS] Firewall bypassed...</div>
+            <div class="log-entry" id="logEntry3">[SUCCESS] Root access obtained...</div>
+            <div class="log-entry" id="logEntry4">[SUCCESS] All data extracted...</div>
+            <div class="log-entry" id="logEntry5">[ACTIVE] Device under surveillance...</div>
+        </div>
+        
+        <div class="hacked-message">
+            <strong>WARNING:</strong> Your system security has been breached. All data including passwords, 
+            personal files, and financial information may have been accessed. 
+            <br><br>
+            This device is now being monitored. The breach is persistent and cannot be removed.
+        </div>
+
+        <div class="hacked-footer">
+            Note: This is a simulated security breach for demonstration purposes only.
+            No actual data has been accessed or compromised.
+        </div>
+        
+        <button class="restart-button" id="simulateButton">SIMULATE ANOTHER BREACH</button>
+    </div>
+
+    <script>
+        // ============================================
+        // LOCAL STORAGE MANAGEMENT
+        // ============================================
+        const STORAGE_KEYS = {
+            FIRST_VISIT_TIME: 'hacker_prank_first_visit_time',
+            DEVICE_ID: 'hacker_prank_device_id',
+            VISIT_COUNT: 'hacker_prank_visit_count',
+            LAST_VISIT_TIME: 'hacker_prank_last_visit_time'
+        };
+
+        // Initialize or get stored data
+        let firstVisitTime = localStorage.getItem(STORAGE_KEYS.FIRST_VISIT_TIME);
+        let deviceId = localStorage.getItem(STORAGE_KEYS.DEVICE_ID);
+        let visitCount = localStorage.getItem(STORAGE_KEYS.VISIT_COUNT) || 0;
+        let lastVisitTime = localStorage.getItem(STORAGE_KEYS.LAST_VISIT_TIME);
+
+        // Generate device ID if not exists
+        if (!deviceId) {
+            deviceId = 'DEV-' + Date.now().toString(36).toUpperCase() + '-' + 
+                       Math.random().toString(36).substr(2, 6).toUpperCase();
+            localStorage.setItem(STORAGE_KEYS.DEVICE_ID, deviceId);
+        }
+
+        // Get current time
+        const now = new Date();
+
+        // Check if this is first visit
+        const isFirstVisit = !firstVisitTime;
+
+        // Update visit data
+        if (isFirstVisit) {
+            // First visit - store the time
+            firstVisitTime = now.toString();
+            localStorage.setItem(STORAGE_KEYS.FIRST_VISIT_TIME, firstVisitTime);
+            console.log('First visit detected. Time stored:', firstVisitTime);
+        }
+
+        // Update visit count and last visit time
+        visitCount = parseInt(visitCount) + 1;
+        localStorage.setItem(STORAGE_KEYS.VISIT_COUNT, visitCount);
+        localStorage.setItem(STORAGE_KEYS.LAST_VISIT_TIME, now.toString());
+
+        // ============================================
+        // DOM ELEMENTS
+        // ============================================
+        const cursor = document.getElementById('cursor');
+        const loadingScreen = document.getElementById('loading-screen');
+        const hackedScreen = document.getElementById('hacked-screen');
+        const countdown = document.getElementById('countdown');
+        const progressFill = document.getElementById('progressFill');
+        const progressPercent = document.getElementById('progressPercent');
+        const loadingDetails = document.getElementById('loadingDetails');
+        const loadingText = document.getElementById('loadingText');
+
+        // Hacked screen elements
+        const initialBreachTimeEl = document.getElementById('initialBreachTime');
+        const currentTimeDisplayEl = document.getElementById('currentTimeDisplay');
+        const timeSinceBreachEl = document.getElementById('timeSinceBreach');
+        const deviceIdDisplayEl = document.getElementById('deviceIdDisplay');
+
+        // ============================================
+        // UTILITY FUNCTIONS
+        // ============================================
+        function formatDateTime(date) {
+            return date.toLocaleString('en-US', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: true
+            });
+        }
+
+        function calculateTimeSince(firstTime) {
+            const firstDate = new Date(firstTime);
+            const currentDate = new Date();
+            const diffMs = currentDate - firstDate;
+            
+            const seconds = Math.floor(diffMs / 1000);
+            const minutes = Math.floor(seconds / 60);
+            const hours = Math.floor(minutes / 60);
+            const days = Math.floor(hours / 24);
+            
+            if (days > 0) {
+                return `${days} day${days !== 1 ? 's' : ''}, ${hours % 24} hour${hours % 24 !== 1 ? 's' : ''}`;
+            } else if (hours > 0) {
+                return `${hours} hour${hours !== 1 ? 's' : ''}, ${minutes % 60} minute${minutes % 60 !== 1 ? 's' : ''}`;
+            } else if (minutes > 0) {
+                return `${minutes} minute${minutes !== 1 ? 's' : ''}, ${seconds % 60} second${seconds % 60 !== 1 ? 's' : ''}`;
+            } else {
+                return `${seconds} second${seconds !== 1 ? 's' : ''}`;
+            }
+        }
+
+        // ============================================
+        // CURSOR
+        // ============================================
+        document.addEventListener('mousemove', function(e) {
+            cursor.style.left = e.pageX + 'px';
+            cursor.style.top = e.pageY + 'px';
+        });
+
+        // ============================================
+        // MATRIX BACKGROUND
+        // ============================================
+        const canvas = document.getElementById('matrixCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        
+        const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789$+-*/=%"\'#&_(),.;:?!\\|{}<>[]^~';
+        const fontSize = 14;
+        const columns = canvas.width / fontSize;
+        const drops = [];
+        
+        for (let i = 0; i < columns; i++) {
+            drops[i] = Math.floor(Math.random() * canvas.height / fontSize);
+        }
+        
+        function drawMatrix() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.fillStyle = '#0f0';
+            ctx.font = `${fontSize}px monospace`;
+            
+            for (let i = 0; i < drops.length; i++) {
+                const text = letters[Math.floor(Math.random() * letters.length)];
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                
+                drops[i]++;
+            }
+        }
+
+        // ============================================
+        // LOADING SEQUENCE (First visit only)
+        // ============================================
+        const loadingMessages = [
+            "Establishing connection to target device...",
+            "Scanning network for vulnerabilities...",
+            "Identifying security protocols...",
+            "Bypassing firewall protection...",
+            "Cracking encryption algorithms...",
+            "Accessing system kernel...",
+            "Injecting rootkit malware...",
+            "Overriding admin privileges...",
+            "Extracting user credentials...",
+            "Accessing personal files...",
+            "Downloading sensitive data...",
+            "Installing backdoor access...",
+            "Covering digital footprints...",
+            "Establishing persistent connection...",
+            "Finalizing system breach..."
+        ];
+
+        const loadingStages = [
+            { text: "INITIALIZING SYSTEM BREACH SEQUENCE...", duration: 15 },
+            { text: "SCANNING FOR VULNERABILITIES...", duration: 20 },
+            { text: "EXPLOITING SECURITY WEAKNESSES...", duration: 25 },
+            { text: "DOWNLOADING MALWARE PAYLOAD...", duration: 20 },
+            { text: "INJECTING PAYLOAD INTO SYSTEM...", duration: 20 }
+        ];
+
+        function startLoadingSequence() {
+            let progress = 0;
+            let currentStage = 0;
+            
+            function updateLoading() {
+                if (progress < 100) {
+                    // Update progress
+                    progress += Math.random() * 2 + 0.5;
+                    if (progress > 100) progress = 100;
+                    
+                    progressFill.style.width = progress + '%';
+                    progressPercent.textContent = Math.floor(progress) + '%';
+                    
+                    // Update loading stage text
+                    const stageIndex = Math.floor(progress / (100 / loadingStages.length));
+                    if (stageIndex < loadingStages.length && stageIndex !== currentStage) {
+                        currentStage = stageIndex;
+                        loadingText.textContent = loadingStages[stageIndex].text;
+                    }
+                    
+                    // Add loading messages
+                    if (progress % (100/loadingMessages.length) < 2) {
+                        const messageIndex = Math.floor(progress / (100/loadingMessages.length));
+                        if (messageIndex < loadingMessages.length) {
+                            const timestamp = new Date().toLocaleTimeString();
+                            loadingDetails.innerHTML += `<span style="color:#0a0">[${timestamp}]</span> > ${loadingMessages[messageIndex]}<br>`;
+                            loadingDetails.scrollTop = loadingDetails.scrollHeight;
+                        }
+                    }
+                    
+                    setTimeout(updateLoading, 100);
+                } else {
+                    // Loading complete - show countdown
+                    loadingScreen.style.display = 'none';
+                    showCountdown();
+                }
+            }
+            
+            updateLoading();
+        }
+
+        // ============================================
+        // COUNTDOWN ANIMATION
+        // ============================================
+        function showCountdown() {
+            countdown.style.display = 'block';
+            let count = 3;
+            
+            function updateCountdown() {
+                if (count > 0) {
+                    countdown.textContent = count;
+                    count--;
+                    setTimeout(updateCountdown, 1000);
+                } else {
+                    countdown.style.display = 'none';
+                    showHackedScreen();
+                }
+            }
+            
+            updateCountdown();
+        }
+
+        // ============================================
+        // HACKED SCREEN
+        // ============================================
+        function showHackedScreen() {
+            // Start matrix animation
+            setInterval(drawMatrix, 50);
+            
+            // Update hacked screen information
+            const initialTime = new Date(firstVisitTime);
+            const currentTime = new Date();
+            
+            initialBreachTimeEl.textContent = formatDateTime(initialTime);
+            currentTimeDisplayEl.textContent = formatDateTime(currentTime);
+            timeSinceBreachEl.textContent = calculateTimeSince(firstVisitTime);
+            deviceIdDisplayEl.textContent = deviceId;
+            
+            // Update log entries with times
+            document.getElementById('logEntry1').textContent = 
+                `[${initialTime.toLocaleTimeString()}] System breach initiated...`;
+            document.getElementById('logEntry2').textContent = 
+                `[${new Date(initialTime.getTime() + 2000).toLocaleTimeString()}] Firewall bypassed...`;
+            document.getElementById('logEntry3').textContent = 
+                `[${new Date(initialTime.getTime() + 4000).toLocaleTimeString()}] Root access obtained...`;
+            document.getElementById('logEntry4').textContent = 
+                `[${new Date(initialTime.getTime() + 6000).toLocaleTimeString()}] All data extracted...`;
+            document.getElementById('logEntry5').textContent = 
+                `[${currentTime.toLocaleTimeString()}] Device under surveillance...`;
+            
+            // Show the hacked screen
+            hackedScreen.style.display = 'flex';
+        }
+
+        // ============================================
+        // SIMULATE BUTTON
+        // ============================================
+        document.getElementById('simulateButton').addEventListener('click', function() {
+            // Reset to show loading screen again
+            hackedScreen.style.display = 'none';
+            loadingScreen.style.display = 'flex';
+            
+            // Reset loading elements
+            progressFill.style.width = '0%';
+            progressPercent.textContent = '0%';
+            loadingDetails.innerHTML = '';
+            loadingText.textContent = 'INITIALIZING SYSTEM BREACH SEQUENCE...';
+            
+            // Start loading sequence
+            startLoadingSequence();
+        });
+
+        // ============================================
+        // DISABLE DEVELOPER TOOLS
+        // ============================================
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+
+        document.addEventListener('keydown', function(e) {
+            // Disable F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
+            if (
+                e.keyCode === 123 || 
+                (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74)) || 
+                (e.ctrlKey && e.keyCode === 85)
+            ) {
+                e.preventDefault();
+                // Show fake warning in log if loading screen is visible
+                if (loadingScreen.style.display !== 'none') {
+                    const timestamp = new Date().toLocaleTimeString();
+                    loadingDetails.innerHTML += `<span style="color:#f00">[${timestamp}] SECURITY ALERT: Inspection attempt blocked!</span><br>`;
+                    loadingDetails.scrollTop = loadingDetails.scrollHeight;
+                }
+            }
+        });
+
+        // ============================================
+        // RESIZE HANDLER
+        // ============================================
+        window.addEventListener('resize', function() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        // ============================================
+        // INITIALIZATION
+        // ============================================
+        function init() {
+            console.log('Visit count:', visitCount);
+            console.log('First visit time:', firstVisitTime);
+            console.log('Device ID:', deviceId);
+            
+            if (isFirstVisit) {
+                // First visit - show loading sequence
+                console.log('First visit detected. Showing loading sequence.');
+                startLoadingSequence();
+            } else {
+                // Returning visit - directly show hacked screen
+                console.log('Returning visit detected. Showing hacked screen directly.');
+                loadingScreen.style.display = 'none';
+                showHackedScreen();
+            }
+        }
+
+        // Start the prank
+        init();
+    </script>
+</body>
+</html>
